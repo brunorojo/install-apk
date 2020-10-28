@@ -20,7 +20,3 @@ STEP 2 - Using git-bash for Windows or via the MAC terminal, run the command:
 ```bash
 ./install-apk.sh
 ```
-
-
-## Bruno Rojo
-## brunoasrojo@gmail.com

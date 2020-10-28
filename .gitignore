@@ -1,0 +1,38 @@
+# APK Folders and files.
+*.apk
+APKs/*
+APK/*
+
+# IPA folders and files.
+*.ipa
+IPAs/*
+IPA/*
+
+# Mac OS X Finder and whatnot
+.DS_Store
+.Trashes
+.DS_*
+
+# Byte-compiled / optimized / DLL files
+__*cache*__
+*.py[cod]
+*$py.class
+
+# mypy
+.mypy_cache/
+
+#JetBrains IDE
+.idea/
+venv/
+
+#VSCode IDE
+.vscode/
+*.code-workspace
+
+# Logs/TMP
+*.log
+*.stackdump
+
+# JSON
+node_modules/
+package-lock.json

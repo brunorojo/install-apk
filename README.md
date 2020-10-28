@@ -1,21 +1,26 @@
-# Instalação do APK em dispositivos Android Físicos ou Emuladores.
-Este script instalar o APK em dispositivos Android, ao executa-lo ele procura o arquivo com extensão .APK, 
-que deve estar na mesma pasta do script, e faz a instalação do APK no dispositivo que deve estar conectado 
-físicamente no computador.
+# Installing the APK on physical Android Devices or Emulators.
+This script installs the APK on Android devices, when running it it looks for the file with extension .APK,
+which must be in the same folder as the script, and install the APK on the device that must be connected
+physically on the computer.
 
-# Informações importantes:
-> - Comando "ADB" deve estar configurado no computador. 
-> - O nome do arquivo APK não pode conter espaço.(bugzinho do código @FIXME)
-> - Não pode conter mais de um arquivo apk na pasta, senão ele instala o primeiro que encontrar.
+# Important informations:
+> - "ADB" command must be configured on the computer.
+> - The APK file name cannot contain space. (@FIXME)
+> - It cannot contain more than one APK file in the folder, otherwise it installs the first one it finds.
 
-
-
-## Como usar?  
-PASSO 1 - Cole o arquivo .apk na pasta do script install-apk-lexis.v1.2.sh  
-PASSO 2 - Utilizando o git-bash para Windows ou via terminal no MAC, execute o comando:
+# Pre condition:
+- Execution permission for the file _install-apk.sh_:
 ```bash
-./install-apk-lexis.v1.2.sh
+chmod 770 install-apk.sh
+```
+
+## How to use:
+STEP 1 - Paste the .APK file into the install-apk.sh script folder
+STEP 2 - Using git-bash for Windows or via the MAC terminal, run the command:
+```bash
+./install-apk.sh
 ```
 
 
-> by: Bruno Rojo
+## Bruno Rojo
+## brunoasrojo@gmail.com

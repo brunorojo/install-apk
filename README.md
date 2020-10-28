@@ -10,6 +10,7 @@ physically on the computer.
 
 # Pre condition:
 - Execution permission for the file _install-apk.sh_:
+
 ```bash
 chmod 770 install-apk.sh
 ```
@@ -17,6 +18,7 @@ chmod 770 install-apk.sh
 ## How to use:
 STEP 1 - Paste the .APK file into the install-apk.sh script folder.  
 STEP 2 - Using git-bash for Windows or via the MAC terminal, run the command:  
+
 ```bash
 ./install-apk.sh
 ```

@@ -36,3 +36,6 @@ venv/
 # JSON
 node_modules/
 package-lock.json
+
+#adb folder
+platform-tools_r30.0.4/

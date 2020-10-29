@@ -21,23 +21,23 @@ function sysinfo() {
 function get_who_i_am(){
 
     # Get computer name. #MINGW64_NT-10.0-19042
-    local my_uname=$(uname) # Win10_OK/ Debian_OK
+    local my_uname=$(uname) # Win10_OK/ Debian_OK/ masOS_OK
     
-    # Convert to lowercase:
-    local my_uname=${my_uname,,} 
+    # Convert to lowercase: [@FIXME-Doesnt work in macOS. (Work in Windows.)]
+    #local my_uname=${my_uname,,} 
     
     # Verify type operation system
-    if [[ "$my_uname" == *mingw64_nt* ]]; then
+    if [[ "$my_uname" == *MINGW64_NT* ]]; then
       
         echo "windows"
-        
-    elif [[ "$my_uname" == *debian* ]]; then
-      
-        echo "debian"
 
-    elif [[ "$my_uname" == *macos* ]]; then
+    elif [[ "$my_uname" == *Darwin* ]]; then
       
         echo "macos"
+
+    elif [[ "$my_uname" == *debian* ]]; then
+      
+        echo "debian"    
 
     else
 

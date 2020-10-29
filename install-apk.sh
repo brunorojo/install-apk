@@ -33,14 +33,17 @@ function folderScan(){
 # Function - Log Information
 function funcCheckCommand(){     
 
-    if [[ "$1" == *Success*  ]] ; then
+    if [[ $@ == *Success*  ]] ; then
         
-		mycolors 'green' "[APK INSTALL] - [$APKTOINSTALL] successfully installed!"
+		mycolors 'green' "[APK INSTALL] - Successfully installed! [$APKTOINSTALL]"
 
         else
+
             echo -e "\n"
             mycolors 'red' " [APK INSTALL] - *** ERROR *** APK: [$APKTOINSTALL] "    
-            mycolors 'red' " [APK INSTALL] - *** ERROR *** MSG: [$INFOINSTALL]" 
+            mycolors 'red' " [APK INSTALL] - *** ERROR *** MSG: [$@]"
+            #mycolors 'red' " [APK INSTALL] - *** ERROR *** MSG2: [$INFOINSTALL]" 
+          
             echo -e "\n"
             mycolors 'white' "[APK INSTALL] - I will try again in $TRYAGAINSLEEP seconds..."    
             mycolors 'white' "[APK INSTALL] - Press the [CTRL+C] keys at any time to cancel the installation."   
@@ -53,25 +56,21 @@ function funcCheckCommand(){
 
 }
 
-
-
-
 # Run adb get-state commands until device. Check Device type.
 # Outputs:(print offline | bootloader | device | error: no devices/emulators found)
 function funcCheckDeviceState(){
 
-    #echo "[DEBUG] ==> $1"
-
     mycolors 'green' "[DEVICE] - Waiting for device to be online. Press the [CTRL+C] keys at any time to cancel the installation..."
-    $1 wait-for-any-device
     
-    if  [[ "$? == 127 ]]; then
+    adb wait-for-any-device 2>/dev/null
+
+    if  [[ "$?" == 127 ]] ; then
         echo "[DEBUG] - CONTROL + C"
         exit 0
     fi     
 
     mycolors 'green' "[DEVICE] - Device is on-line!"
-    $1 get-state
+    adb get-state 2>/dev/null
 
 }
 
@@ -94,6 +93,7 @@ if [[ -z "$USERFILE" ]]; then
         APKTOINSTALL=$USERFILE
     
     fi
+
 }
 
 # Executa a instalacao.
@@ -103,25 +103,16 @@ function funcInstall(){
     # get name operation system info
     case $(get_who_i_am) in
 	    windows)
-            
-            # (Windows) Run adb get-state commands until device. Check Device type.
-            funcCheckDeviceState 'platform-tools_r30.0.4/Windows-platform-tools/adb.exe'
-
-            # Install
-            mycolors 'green' "[APK INSTALL] - [DEBUG] WINDOWS - Installing: [$APKTOINSTALL]"
-            INFOINSTALL=$(platform-tools_r30.0.4/Windows-platform-tools/adb.exe install -i com.android.vending -r $APKTOINSTALL) #for Win [OK!]
+            mycolors 'green' "[APK INSTALL] - WINDOWS - Installing: [$APKTOINSTALL]"
+            INFOINSTALL=$(adb.exe install -i com.android.vending -r $APKTOINSTALL) #for Win [OK!]
             funcCheckCommand $INFOINSTALL
             ;;
 	    macos)
-            # (macOS) Run adb get-state commands until device. Check Device type.
-            funcCheckDeviceState 'platform-tools_r30.0.4\macOS-platform-tools\adb'
-
-            mycolors 'green' "[APK INSTALL] - [DEBUG] MACOS - Installing: [$APKTOINSTALL]"
-            INFOINSTALL=$(platform-tools_r30.0.4\macOS-platform-tools\adb install -i com.android.vending -r $APKTOINSTALL) #for macOS
+            mycolors 'green' "[APK INSTALL] - MACOS - Installing: [$APKTOINSTALL]"
+            INFOINSTALL=$(adb install -i com.android.vending -r $APKTOINSTALL) #for macOS
 		    funcCheckCommand $INFOINSTALL
             ;;
 	    debian)
-            #mycolors 'green' "[APK INSTALL] - [DEBUG] DEBIAN - Installing: [$APKTOINSTALL]"
             mycolors 'green' "@TODO - Debian..."
             ;;
         *)
@@ -130,6 +121,7 @@ function funcInstall(){
             ;;
     esac
 
+    
 }
 
 
@@ -146,20 +138,19 @@ folderScan
 # Chama a funcao para verificar se o apk existe na pasta corrente.
 funcCheckFileExists
 
-# Matar e subir o servidor adb novamente, implementado devido a uma repeticao de instalacao e desinstacao onde o servidor parou de responder.
+# (@TODO Criar funcao) - Matar e subir o servidor adb novamente, implementado devido a uma repeticao de instalacao e desinstacao onde o servidor parou de responder.
 #echo -e "$tagBlue [ADB]$tagEnd - Kill adb server."
-#adb kill-server 2>/dev/null
+adb kill-server 2>/dev/null
 #echo -e "$tagBlue [ADB]$tagEnd - Start adb server."
-#adb start-server 2>/dev/null
+adb start-server 2>/dev/null
 #echo -e "$tagBlue [ADB]$tagEnd - Restart device usb."
-#adb usb device -d 2>/dev/null
+adb usb device -d 2>/dev/null
 
-
+#
+funcCheckDeviceState
 
 # Install APK!
 funcInstall
 
-
-echo -e "\n"
 mycolors 'blue' "[THE END] - [$(date +%d-%m-%Y)] - [$(date +%T)]  "
 exit 0
